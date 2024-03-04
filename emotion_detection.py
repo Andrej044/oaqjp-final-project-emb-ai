@@ -1,8 +1,5 @@
 import requests
-
-r = requests.get('https://www.python.org')
-status_code = r.status_code
-print(status_code)
+import json
 
 def emotion_detector(text_to_analyze):
   
@@ -11,7 +8,15 @@ def emotion_detector(text_to_analyze):
   myobj = { "raw_document": { "text": text_to_analyze } }
   
   response = requests.post(url, json=myobj, headers=header)
-  print(response.status_code)
-  return response.text
+  formatted_response = json.loads(response.text)
+#   print(formatted_response)
 
-emotion_detector('I like this game')
+  emotionPredictions = formatted_response['emotionPredictions'][0]
+  anger = emotionPredictions['emotion']['anger']
+  disgust = emotionPredictions['emotion']['disgust']
+  fear = emotionPredictions['emotion']['fear']
+  joy = emotionPredictions['emotion']['joy']
+  sadness = emotionPredictions['emotion']['sadness']
+#   print(anger)
+
+  return response.text
