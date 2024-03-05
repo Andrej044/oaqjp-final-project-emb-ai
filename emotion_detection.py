@@ -12,11 +12,38 @@ def emotion_detector(text_to_analyze):
 #   print(formatted_response)
 
   emotionPredictions = formatted_response['emotionPredictions'][0]
-  anger = emotionPredictions['emotion']['anger']
-  disgust = emotionPredictions['emotion']['disgust']
-  fear = emotionPredictions['emotion']['fear']
-  joy = emotionPredictions['emotion']['joy']
-  sadness = emotionPredictions['emotion']['sadness']
-#   print(anger)
-
-  return response.text
+  anger_score = emotionPredictions['emotion']['anger']
+  disgust_score = emotionPredictions['emotion']['disgust']
+  fear_score = emotionPredictions['emotion']['fear']
+  joy_score = emotionPredictions['emotion']['joy']
+  sadness_score = emotionPredictions['emotion']['sadness']
+  
+  emotion_array = [anger_score, disgust_score, fear_score, joy_score, sadness_score]
+  
+  emotion_dictionary = {
+    'anger' : anger_score,
+    'disgust' : disgust_score,
+    'fear' : fear_score,
+    'joy' : joy_score,
+    'sadness' : sadness_score,
+    'domination_emotion' : None
+  }
+  
+  
+  
+  def find_domination_emotion(arr):
+    arr.sort(reverse=True)
+    emotion_name = None
+    
+    for emotion in emotion_dictionary:
+      if arr[0] == emotion_dictionary[emotion]:
+        emotion_name = emotion
+        return emotion_name
+    return emotion_name 
+  
+  
+  domination_emotion = find_domination_emotion(emotion_array)
+  
+  emotion_dictionary.update({'domination_emotion': domination_emotion})
+  
+  return emotion_dictionary
