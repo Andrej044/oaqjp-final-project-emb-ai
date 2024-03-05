@@ -9,7 +9,6 @@ def emotion_detector(text_to_analyze):
   
   response = requests.post(url, json=myobj, headers=header)
   formatted_response = json.loads(response.text)
-#   print(formatted_response)
 
   emotionPredictions = formatted_response['emotionPredictions'][0]
   anger_score = emotionPredictions['emotion']['anger']
@@ -29,8 +28,6 @@ def emotion_detector(text_to_analyze):
     'domination_emotion' : None
   }
   
-  
-  
   def find_domination_emotion(arr):
     arr.sort(reverse=True)
     emotion_name = None
@@ -40,7 +37,6 @@ def emotion_detector(text_to_analyze):
         emotion_name = emotion
         return emotion_name
     return emotion_name 
-  
   
   domination_emotion = find_domination_emotion(emotion_array)
   
